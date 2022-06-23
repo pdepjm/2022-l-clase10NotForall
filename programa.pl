@@ -36,3 +36,27 @@ usaMasDeUnHechizo(Mago):-
     usaHechizo(Mago,Hechizo1),
     usaHechizo(Mago,Hechizo2),
     Hechizo2 \= Hechizo1.
+
+hechizoQueNadieUsa(Hechizo) :- 
+    hechizo(Hechizo,_), 
+    not(usa(_,Hechizo,_)).
+    
+hechizoQueTodosUsan(Hechizo) :- 
+    hechizo(Hechizo, _), 
+    not(hayUnMagoQueNoLoUsa(Hechizo)).
+
+hayUnMagoQueNoLoUsa(Hechizo):-
+    mago(Mago),
+    not(usa(Mago,Hechizo,_)).
+
+hechizoQueTodosUsan2(Hechizo) :-
+    hechizo(Hechizo, _), 
+    forall(mago(Mago),usa(Mago,Hechizo,_)).
+
+seSabeTodasLasPociones(Mago) :- 
+    mago(Mago), 
+    forall(pocion(Pocion,_,_),usa(Mago, Pocion,_)).
+
+soloSabeDePociones(Mago):-
+    mago(Mago), 
+    forall(usa(Mago, Pocion,_), pocion(Pocion,_,_)).
